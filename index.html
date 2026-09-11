@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f0e8" />
+    <meta name="description" content="从找到第一个琴键开始，跟着声音与键盘提示，学会读懂和弦代号。" />
+    <title>CHORD / 从零弹出和弦</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23171713'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial' font-size='30' font-weight='700' fill='white'%3EC%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css?v=20260910-1" />
+    <link rel="stylesheet" href="beginner.css?v=20260907-1" />
+    <link rel="stylesheet" href="practice-player.css?v=20260909-1" />
+    <link rel="stylesheet" href="theory.css?v=20260911-1" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <aside class="sidebar">
+      <a class="brand" href="#home" data-view="home" aria-label="CHORD 首页">
+        <span class="brand-mark">C<span>/</span></span>
+        <span>CHORD<small>听见和弦，看懂音乐</small></span>
+      </a>
+
+      <nav class="main-nav" aria-label="主导航">
+        <button class="nav-item active" data-view="home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+          <span>我的学习</span><kbd>01</kbd>
+        </button>
+        <button class="nav-item" data-view="theory">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-3m3 5h-3m3 5h-3"/></svg>
+          <span>和弦乐理</span><kbd>14</kbd>
+        </button>
+        <button class="nav-item" data-view="learn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v17H6.5A2.5 2.5 0 0 0 4 22zm16 0A2.5 2.5 0 0 0 17.5 3H13v17h4.5A2.5 2.5 0 0 1 20 22z"/></svg>
+          <span>歌曲与和弦库</span><kbd>08</kbd>
+        </button>
+        <button class="nav-item" data-view="ear">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a7 7 0 0 0-7 7v4m14-4a7 7 0 0 0-7-7m-7 7H3v5a3 3 0 0 0 3 3h1v-8zm12 0h2v5a3 3 0 0 1-3 3h-1v-8z"/></svg>
+          <span>听听区别</span><kbd>02</kbd>
+        </button>
+        <button class="nav-item" data-view="piano">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM8 5v9m4-9v9m4-9v9M6 5v6h4V5m4 0v6h4V5"/></svg>
+          <span>看代号找键</span><kbd>∞</kbd>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="week-mini">
+          <div><span>我的起步课程</span><strong id="sidebar-progress">0<small>/ 3 课</small></strong></div>
+          <p class="local-progress-note">学习进度保存在这台设备</p>
+        </div>
+        <small class="audio-credit">PIANO · SALAMANDER GRAND</small>
+        <div class="profile">
+          <span class="avatar">M</span>
+          <span><strong>和弦探索者</strong><small id="learner-status">从第一颗琴键开始</small></span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="app-main">
+      <header class="topbar">
+        <p id="page-kicker">我的学习 / 从零开始</p>
+        <div class="top-actions">
+          <span class="streak" id="learning-status">一次学会一点</span>
+          <button class="icon-button" aria-label="声音设置" id="sound-toggle">
+            <svg viewBox="0 0 24 24"><path d="M5 9v6h4l5 4V5L9 9zm12-1a6 6 0 0 1 0 8m2-11a10 10 0 0 1 0 14"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="view active" id="home-view" data-view-panel="home">
+        <div id="beginner-home"></div>
+        <div class="theory-home-link"><div><h2>想知道这些和弦为什么这样弹？</h2><p>14 节和弦乐理课，从音名开始，通过解释、试听和小练习慢慢学会。</p></div><button class="secondary-button" data-view="theory">开始学习和弦乐理 →</button></div>
+      </section>
+
+      <section class="view" id="beginner-view" data-view-panel="beginner">
+        <div id="beginner-workspace"></div>
+      </section>
+
+      <section class="view" id="theory-view" data-view-panel="theory">
+        <div id="theory-workspace"></div>
+      </section>
+
+      <section class="view" id="learn-view" data-view-panel="learn">
+        <div class="section-title">
+          <div><span class="eyebrow"><i></i> 延伸探索</span><h1>歌曲与和弦库</h1><p>学过基础后，在歌曲里看看这些和弦怎么用。</p></div>
+          <button class="secondary-button" data-view="home">回到新手路线 →</button>
+        </div>
+        <section class="song-library-section" aria-labelledby="song-library-title">
+          <h2 id="song-library-title">选一首熟悉的歌来练</h2>
+          <p>先选歌，再选下方的和弦。同一个和弦可以换歌练；若本曲没有所选和弦，会打开它的配套曲目。</p>
+          <div id="song-library" class="song-library" aria-label="练习曲选择"></div>
+        </section>
+        <div class="learn-layout">
+          <div class="chord-list" id="chord-list"></div>
+          <article class="lesson-panel" id="lesson-panel" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="view" id="ear-view" data-view-panel="ear">
+        <div class="training-header">
+          <button class="back-link" data-view="home">← 返回我的学习</button>
+          <div class="step-count"><span id="ear-step-label">第 1 / 10 题</span><div><i id="ear-progress"></i></div></div>
+        </div>
+        <div class="training-shell ear-shell">
+          <span class="eyebrow centered"><i></i> 同一个起始音 · 两种和弦 <i></i></span>
+          <h1>听听，哪里不一样？</h1>
+          <p>先听两个示范，再听题目。这里先练 C 和 Cm，可以反复对比。</p><div id="ear-examples" class="ear-examples"></div>
+          <div class="audio-orbit">
+            <div class="wave-ring"><i></i><i></i><i></i><i></i><i></i></div>
+            <button id="quiz-play" class="quiz-play" aria-label="播放题目音频">▶</button>
+            <small>点击播放</small>
+          </div>
+          <div class="answer-grid" id="answer-grid"></div>
+          <div class="feedback-row" id="ear-feedback"><span>选择一个答案</span><button id="next-ear" disabled>下一题 →</button></div>
+        </div>
+      </section>
+
+      <section class="view" id="piano-view" data-view-panel="piano">
+        <div class="training-header">
+          <button class="back-link" data-view="home">← 返回我的学习</button>
+          <div class="step-count"><span id="piano-step-label">第 1 次练习</span><div><i id="piano-progress" style="width: 10%"></i></div></div>
+        </div>
+        <div class="training-shell piano-shell">
+          <span class="eyebrow centered"><i></i> 撤掉高亮，自己找一次 <i></i></span>
+          <p class="challenge-kicker">请在键盘上点出</p>
+          <div class="challenge-chord" id="challenge-chord">C</div>
+          <p id="challenge-hint">从学过的代号开始，点选琴键后一起听。</p><button class="text-button" id="piano-show-hint">给我一点提示</button>
+          <div class="selected-notes" id="selected-notes"><span>—</span><span>—</span><span>—</span><span>—</span></div>
+          <div class="keyboard-wrap">
+            <div class="keyboard" id="keyboard" aria-label="两组八度虚拟钢琴键盘"></div>
+          </div>
+          <div class="piano-actions">
+            <button class="secondary-button" id="clear-keys">清空</button>
+            <button class="primary-button" id="check-keys">检查答案 <span>→</span></button>
+          </div>
+          <div class="piano-feedback" id="piano-feedback" role="status">点一下选中，再点一下取消。这里练习找音，实际弹奏请到琴上试一试。</div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="mobile-nav" aria-label="移动端导航">
+      <button class="active" data-view="home"><span>⌂</span>学习</button>
+      <button data-view="theory"><span>♮</span>乐理</button>
+      <button data-view="learn"><span>▤</span>和弦库</button>
+      <button data-view="ear"><span>◖</span>听区别</button>
+      <button data-view="piano"><span>♬</span>找琴键</button>
+    </nav>
+
+    <script src="node_modules/opensheetmusicdisplay/build/opensheetmusicdisplay.min.js"></script>
+    <script src="beginner-model.js?v=20260907-1"></script>
+    <script src="just-two-data.js?v=20260908-1"></script>
+    <script src="practice-model.js?v=20260909-1"></script>
+    <script src="just-two-model.js?v=20260909-1"></script>
+    <script src="practice-song-data.js?v=20260909-1"></script>
+    <script src="practice-catalog.js?v=20260909-1"></script>
+    <script src="lesson-scales.js?v=20260910-1"></script>
+    <script src="app.js?v=20260910-2"></script>
+    <script src="beginner.js?v=20260907-1"></script>
+    <script src="chord-instrument.js?v=20260908-3"></script>
+    <script src="practice-player.js?v=20260909-1"></script>
+    <script src="theory-model.js?v=20260911-1"></script>
+    <script src="theory-score.js?v=20260911-1"></script>
+    <script src="theory.js?v=20260911-1"></script>
+  </body>
+</html>

@@ -55,3 +55,9 @@
 .song-choice[aria-pressed="true"] strong { color: #287143; }
 .song-choice:focus-visible { outline: 3px solid #cc8a43; outline-offset: 3px; }
 @media(max-width:600px) { .song-library { grid-template-columns: repeat(2,minmax(0,1fr)); } .song-choice { padding: 12px; } }
+
+@media (min-width:701px) and (max-width:1400px) {
+  .jt-controls select,.jt-known,.jt-midi button { min-height:44px; }
+  .jt-controls .jt-loop,.jt-manual-toggle { min-height:44px; }
+  .jt-phrase > div button { min-width:44px; min-height:44px; }
+}

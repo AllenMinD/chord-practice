@@ -16,3 +16,6 @@ output/
 !.env.example
 *.log
 npm-debug.log*
+
+# Static hosting build
+dist/

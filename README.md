@@ -98,3 +98,11 @@ npm run build:studies
 直接进入：[Imagine](http://127.0.0.1:4173/#imagine-study)、[Wonderwall](http://127.0.0.1:4173/#wonderwall-study)、[Dreams](http://127.0.0.1:4173/#dreams-study)、[Just the Two of Us](http://127.0.0.1:4173/#just-two-study)。
 
 新增中文短练习：[晴天](http://127.0.0.1:4173/#qingtian-study)、[遇见](http://127.0.0.1:4173/#yujian-study)、[爱爱爱](http://127.0.0.1:4173/#aiaiai-study)。
+
+## GitHub Pages 发布
+
+运行 `npm ci`、`npm run check`、`npm test`、`npm run build:site` 后，静态发布包位于 `dist/`。构建仅复制网页运行文件和素材，将排谱依赖放到 `vendor/`；无需上传整个 `node_modules`。所有资源使用相对路径，支持 GitHub Pages 的仓库子路径。
+
+`.github/workflows/pages.yml` 在推送到 `main` 时检查并构建，再发布到 GitHub Pages。需先在仓库 Settings → Pages 中启用 GitHub Actions；仓库和账户必须满足 Pages 使用条件。
+
+部署版通过 HTTPS 访问，进度仍仅存于当前浏览器，不会在设备之间同步；本地地址的旧进度也不会自动迁移。原来的本机运行方式仍可使用。

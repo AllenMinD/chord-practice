@@ -7,10 +7,11 @@
     <meta name="description" content="从找到第一个琴键开始，跟着声音与键盘提示，学会读懂和弦代号。" />
     <title>CHORD / 从零弹出和弦</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23171713'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial' font-size='30' font-weight='700' fill='white'%3EC%3C/text%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="styles.css?v=20260910-1" />
+    <link rel="stylesheet" href="styles.css?v=20260914-1" />
     <link rel="stylesheet" href="beginner.css?v=20260907-1" />
-    <link rel="stylesheet" href="practice-player.css?v=20260909-1" />
+    <link rel="stylesheet" href="practice-player.css?v=20260914-1" />
     <link rel="stylesheet" href="theory.css?v=20260911-1" />
+      <link rel="stylesheet" href="scale-reference.css?v=20260911-1" />
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
@@ -28,6 +29,10 @@
         <button class="nav-item" data-view="theory">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-3m3 5h-3m3 5h-3"/></svg>
           <span>和弦乐理</span><kbd>14</kbd>
+        </button>
+        <button class="nav-item" data-view="scales">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM8 5v9m4-9v9m4-9v9"/></svg>
+          <span>常用音阶速查</span><kbd>08</kbd>
         </button>
         <button class="nav-item" data-view="learn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v17H6.5A2.5 2.5 0 0 0 4 22zm16 0A2.5 2.5 0 0 0 17.5 3H13v17h4.5A2.5 2.5 0 0 1 20 22z"/></svg>
@@ -75,6 +80,8 @@
       <section class="view" id="beginner-view" data-view-panel="beginner">
         <div id="beginner-workspace"></div>
       </section>
+
+      <section class="view" id="scales-view" data-view-panel="scales"><div id="scales-workspace"></div></section>
 
       <section class="view" id="theory-view" data-view-panel="theory">
         <div id="theory-workspace"></div>
@@ -141,6 +148,7 @@
     <nav class="mobile-nav" aria-label="移动端导航">
       <button class="active" data-view="home"><span>⌂</span>学习</button>
       <button data-view="theory"><span>♮</span>乐理</button>
+      <button data-view="scales"><span>♬</span>音阶</button>
       <button data-view="learn"><span>▤</span>和弦库</button>
       <button data-view="ear"><span>◖</span>听区别</button>
       <button data-view="piano"><span>♬</span>找琴键</button>
@@ -159,7 +167,9 @@
     <script src="chord-instrument.js?v=20260908-3"></script>
     <script src="practice-player.js?v=20260909-1"></script>
     <script src="theory-model.js?v=20260911-1"></script>
-    <script src="theory-score.js?v=20260911-1"></script>
+    <script src="theory-score.js?v=20260911-2"></script>
     <script src="theory.js?v=20260911-1"></script>
+    <script src="scale-reference-model.js?v=20260911-1"></script>
+    <script src="scale-reference.js?v=20260911-2"></script>
   </body>
 </html>

@@ -26,13 +26,13 @@
     const alteration = note.alter ? `前面的${note.alter<0?"降":"升"}号让这个音${note.alter<0?"降低":"升高"}${Math.abs(note.alter)===2?"两个":"一个"}半音；符头仍在同一个线 / 间位置。` : "";
     return `${note.name}：符头在${location}，对应键盘上的${[1,3,6,8,10].includes(midi%12)?"黑":"白"}键。${alteration}`;
   }
-  function musicXml(demo, { layout = "steps", labels = true, kind = clef(demo.notes) } = {}) {
+  function musicXml(demo, { layout = "steps", labels = true, labelLayout = "inline", kind = clef(demo.notes) } = {}) {
     const notes = demo.notes.map((n,i)=>pitch(n,demo.names[i]));
     const simultaneous = layout === "chord";
     const count = simultaneous ? 1 : Math.max(1,notes.length);
     const duration = simultaneous ? 4 : 1;
     const accidental = {"-2":"flat-flat","-1":"flat","1":"sharp","2":"double-sharp"};
-    const body = notes.length ? notes.map((note,i)=>`<note color="#274c3d">${simultaneous && i ? "<chord/>" : ""}<pitch><step>${note.step}</step>${note.alter ? `<alter>${note.alter}</alter>` : ""}<octave>${note.octave}</octave></pitch><duration>${duration}</duration><type>${simultaneous?"whole":"quarter"}</type>${note.alter?`<accidental>${accidental[note.alter]}</accidental>`:""}${!simultaneous && labels?`<lyric><text>${escape(`${i+1} · ${note.name}`)}</text></lyric>`:""}</note>`).join("") : '<note print-object="no"><rest/><duration>1</duration><type>quarter</type></note>';
+    const body = notes.length ? notes.map((note,i)=>`<note color="#274c3d">${simultaneous && i ? "<chord/>" : ""}<pitch><step>${note.step}</step>${note.alter ? `<alter>${note.alter}</alter>` : ""}<octave>${note.octave}</octave></pitch><duration>${duration}</duration><type>${simultaneous?"whole":"quarter"}</type>${note.alter?`<accidental>${accidental[note.alter]}</accidental>`:""}${!simultaneous && labels?(labelLayout === "stacked" ? `<lyric number="1"><text>${i+1}</text></lyric><lyric number="2"><text>${escape(note.name)}</text></lyric>` : `<lyric><text>${escape(`${i+1} · ${note.name}`)}</text></lyric>`):""}</note>`).join("") : '<note print-object="no"><rest/><duration>1</duration><type>quarter</type></note>';
     return `<?xml version="1.0" encoding="utf-8"?><score-partwise version="4.0"><part-list><score-part id="P1"><part-name>音高示例</part-name></score-part></part-list><part id="P1"><measure number="1" implicit="yes"><attributes><divisions>1</divisions><key><fifths>0</fifths></key><time print-object="no"><beats>${simultaneous?4:count}</beats><beat-type>4</beat-type></time><clef><sign>${kind==="bass"?"F":"G"}</sign><line>${kind==="bass"?4:2}</line></clef></attributes>${body}<barline location="right"><bar-style>none</bar-style></barline></measure></part></score-partwise>`;
   }
   async function render(container,demo,options = {}) {

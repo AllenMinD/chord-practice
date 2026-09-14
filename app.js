@@ -167,7 +167,7 @@ function navigate(view) {
   stopLessonDemo();
   document.querySelectorAll("[data-view-panel]").forEach(panel => panel.classList.toggle("active", panel.dataset.viewPanel === view));
   document.querySelectorAll(".nav-item, .mobile-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === (view === "beginner" ? "home" : view)));
-  const labels = { home: "我的学习 / 从零开始", beginner: "跟着弹 / 一次学会一点", theory: "和弦乐理 / 一次弄懂一点", learn: "延伸探索 / 歌曲与和弦库", ear: "听听区别 / 可以反复试听", piano: "看代号找键 / 独立试一试" };
+  const labels = { scales: "常用音阶速查 / 看谱找键与指法", home: "我的学习 / 从零开始", beginner: "跟着弹 / 一次学会一点", theory: "和弦乐理 / 一次弄懂一点", learn: "延伸探索 / 歌曲与和弦库", ear: "听听区别 / 可以反复试听", piano: "看代号找键 / 独立试一试" };
   document.querySelector("#page-kicker").textContent = labels[view];
   window.scrollTo({ top: 0, behavior: "smooth" });
   if (view === "ear" && !earState.ready) newEarQuestion();

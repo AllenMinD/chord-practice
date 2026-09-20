@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="practice-player.css?v=20260914-1" />
     <link rel="stylesheet" href="theory.css?v=20260911-1" />
       <link rel="stylesheet" href="scale-reference.css?v=20260911-1" />
+  <link rel="stylesheet" href="sight-reading.css?v=20260917-1" />
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
@@ -26,6 +27,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
           <span>我的学习</span><kbd>01</kbd>
         </button>
+        <button class="nav-item" data-view="reading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 10h18M3 14h18M3 18h18M14 3v12l-4 2"/></svg><span>读谱训练</span><kbd>06</kbd></button>
         <button class="nav-item" data-view="theory">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-3m3 5h-3m3 5h-3"/></svg>
           <span>和弦乐理</span><kbd>14</kbd>
@@ -83,6 +85,7 @@
 
       <section class="view" id="scales-view" data-view-panel="scales"><div id="scales-workspace"></div></section>
 
+      <section class="view" id="reading-view" data-view-panel="reading"><div id="reading-workspace"></div></section>
       <section class="view" id="theory-view" data-view-panel="theory">
         <div id="theory-workspace"></div>
       </section>
@@ -147,6 +150,7 @@
 
     <nav class="mobile-nav" aria-label="移动端导航">
       <button class="active" data-view="home"><span>⌂</span>学习</button>
+      <button data-view="reading"><span>♪</span>读谱</button>
       <button data-view="theory"><span>♮</span>乐理</button>
       <button data-view="scales"><span>♬</span>音阶</button>
       <button data-view="learn"><span>▤</span>和弦库</button>
@@ -171,5 +175,8 @@
     <script src="theory.js?v=20260911-1"></script>
     <script src="scale-reference-model.js?v=20260911-1"></script>
     <script src="scale-reference.js?v=20260911-2"></script>
+  <script src="sight-reading-model.js?v=20260916-1"></script>
+    <script src="rhythm-count-in.js?v=20260917-3"></script>
+    <script src="sight-reading.js?v=20260917-4"></script>
   </body>
 </html>

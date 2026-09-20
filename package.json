@@ -5,7 +5,7 @@
   "description": "现代和弦视谱与听辨练习原型",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "check": "node --check app.js && node --check scale-reference-model.js && node --check scale-reference.js && node --check lesson-scales.js && node --check beginner-model.js && node --check beginner.js && node --check just-two-data.js && node --check practice-model.js && node --check just-two-model.js && node --check practice-song-data.js && node --check practice-catalog.js && node --check chord-instrument.js && node --check practice-player.js && node --check theory-model.js && node --check theory-score.js && node --check theory.js",
+    "check": "node --check app.js && node --check scale-reference-model.js && node --check scale-reference.js && node --check lesson-scales.js && node --check beginner-model.js && node --check beginner.js && node --check just-two-data.js && node --check practice-model.js && node --check just-two-model.js && node --check practice-song-data.js && node --check practice-catalog.js && node --check chord-instrument.js && node --check practice-player.js && node --check theory-model.js && node --check theory-score.js && node --check theory.js && node --check sight-reading-model.js && node --check sight-reading.js && node --check rhythm-count-in.js",
     "build:studies": "node scripts/build-just-two-study.cjs && node scripts/build-practice-songs.cjs",
     "build:site": "node scripts/build-site.cjs"
   },

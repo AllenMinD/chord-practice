@@ -49,6 +49,43 @@ const chords = [
   }
 ];
 
+
+// 按自然音根音分组，先认识三和弦，再比较小七与大七。
+const libraryRoots = ["C", "D", "E", "F", "G", "A", "B"];
+const libraryRootPitches = [0, 2, 4, 5, 7, 9, 11];
+const libraryQualities = [
+  { suffix: "", name: "大三和弦", steps: [0, 4, 7], formula: ["1", "3", "5"], mood: "明亮 · 稳定", theory: "不带后缀的字母表示大三和弦，由根音、大三度和纯五度组成。" },
+  { suffix: "m", name: "小三和弦", steps: [0, 3, 7], formula: ["1", "♭3", "5"], mood: "柔和 · 内省", theory: "m 表示小三和弦：把同根音大三和弦的三音降低半音，根音和五音不变。" },
+  { suffix: "m7", name: "小七和弦", steps: [0, 3, 7, 10], formula: ["1", "♭3", "5", "♭7"], mood: "松弛 · 柔和", theory: "在小三和弦上加入小七度。m 指小三度，7 指小七度；它们分别描述两个音的关系。" },
+  { suffix: "maj7", name: "大七和弦", steps: [0, 4, 7, 11], formula: ["1", "3", "5", "7"], mood: "温暖 · 细腻", theory: "在大三和弦上加入大七度。maj7 是一个完整后缀，最高音与高八度根音相差半音。" }
+];
+libraryRoots.forEach((root, rootIndex) => {
+  libraryQualities.forEach(quality => {
+    const id = root + quality.suffix;
+    if (chords.some(chord => chord.id === id)) return;
+    const midi = quality.steps.map(step => 48 + libraryRootPitches[rootIndex] + step);
+    const notes = quality.steps.map((step, index) => {
+      const letterIndex = (rootIndex + index * 2) % 7;
+      let alteration = (libraryRootPitches[rootIndex] + step - libraryRootPitches[letterIndex] + 12) % 12;
+      if (alteration > 6) alteration -= 12;
+      return libraryRoots[letterIndex] + (alteration > 0 ? "♯".repeat(alteration) : "♭".repeat(-alteration));
+    });
+    chords.push({ id, html: `${root}${quality.suffix ? `<sup>${quality.suffix}</sup>` : ""}`,
+      name: `${root} ${quality.name}`, mood: quality.mood, notes, midi,
+      pcs: midi.map(note => ["C", "Cs", "D", "Ds", "E", "F", "Fs", "G", "Gs", "A", "As", "B"][note % 12]),
+      formula: quality.formula, theory: quality.theory, song: null });
+  });
+});
+const librarySuffixOrder = ["", "m", "m7", "maj7", "7", "sus2", "sus4", "add9"];
+chords.sort((a, b) => {
+  const parts = chord => /^([A-G])([b#]?)(.*)$/.exec(chord.id);
+  const left = parts(a), right = parts(b);
+  const rank = suffix => { const index = librarySuffixOrder.indexOf(suffix); return index < 0 ? librarySuffixOrder.length : index; };
+  return libraryRoots.indexOf(left[1]) - libraryRoots.indexOf(right[1])
+    || Number(Boolean(left[2])) - Number(Boolean(right[2]))
+    || rank(left[3]) - rank(right[3]);
+});
+
 let audioContext;
 let soundEnabled = true;
 let pianoOutput;
@@ -167,7 +204,7 @@ function navigate(view) {
   stopLessonDemo();
   document.querySelectorAll("[data-view-panel]").forEach(panel => panel.classList.toggle("active", panel.dataset.viewPanel === view));
   document.querySelectorAll(".nav-item, .mobile-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === (view === "beginner" ? "home" : view)));
-  const labels = { reading: "读谱训练 / 从认音到连续识读", scales: "常用音阶速查 / 看谱找键与指法", home: "我的学习 / 从零开始", beginner: "跟着弹 / 一次学会一点", theory: "和弦乐理 / 一次弄懂一点", learn: "延伸探索 / 歌曲与和弦库", ear: "听听区别 / 可以反复试听", piano: "看代号找键 / 独立试一试" };
+  const labels = { songs: "乐曲练习 / 把学过的和弦弹进音乐", reading: "读谱训练 / 从认音到连续识读", scales: "常用音阶速查 / 看谱找键与指法", home: "我的学习 / 从零开始", beginner: "跟着弹 / 一次学会一点", theory: "和弦乐理 / 一次弄懂一点", learn: "延伸探索 / 现代和弦库", ear: "听听区别 / 可以反复试听", piano: "看代号找键 / 独立试一试" };
   document.querySelector("#page-kicker").textContent = labels[view];
   window.scrollTo({ top: 0, behavior: "smooth" });
   if (view === "ear" && !earState.ready) newEarQuestion();
@@ -270,30 +307,30 @@ function mountLessonKeyboard(chord) {
     playLessonDemo(scaleMode ? LessonScales.forChord(chord).notes.map(note => note.midi) : chord.midi, scaleMode);
   });
 }
-function renderSongLibrary() {
-  const library=document.querySelector('#song-library');
-  library.innerHTML=PracticeCatalog.studies.map(study=>{
-    const ids=chords.filter(chord=>study.voicings[chord.id]).map(chord=>chord.id);
-    const artist=study.config.artist||chords.find(chord=>chord.song===study.config.song)?.artist||'';
-    return `<button type="button" class="song-choice" data-practice-song="${study.config.id}" aria-pressed="${activeLesson?.song===study.config.song}"><strong>${study.config.song}</strong><span>${artist}</span><small>${study.barCount} 小节 · ${ids.join(' / ').replaceAll('Db','D♭')}</small></button>`;
-  }).join('');
-  library.querySelectorAll('[data-practice-song]').forEach(button=>button.addEventListener('click',()=>{
-    const study=PracticeCatalog.studies.find(item=>item.config.id===button.dataset.practiceSong);
-    const id=study.voicings[activeLesson?.id]?activeLesson.id:study.config.defaultLesson;
-    selectLesson(id,study.config.song);
-  }));
-}
 function renderChordList() {
   const list = document.querySelector("#chord-list");
+  const picker = document.querySelector("#chord-picker");
+  picker.addEventListener("keydown", event => {
+    if (event.key === "Escape" && picker.open) {
+      picker.open = false;
+      picker.querySelector("summary").focus();
+      event.preventDefault();
+    }
+  });
+  document.addEventListener("click", event => {
+    if (!picker.contains(event.target)) picker.open = false;
+  });
   list.innerHTML = chords.map((chord, index) => `
     <button class="chord-item ${index === 0 ? "active" : ""}" data-chord-id="${chord.id}">
-      <span class="num">0${index + 1}</span><span class="symbol">${chord.html}</span>
+      <span class="num">${String(index + 1).padStart(2, "0")}</span><span class="symbol">${chord.html}</span>
       <span class="desc"><strong>${chord.name}</strong><small>${chord.mood}</small></span>
     </button>`).join("");
   list.querySelectorAll(".chord-item").forEach(button => button.addEventListener("click", () => {
     const id=button.dataset.chordId;
     const study=PracticeCatalog.forSong(activeLesson?.song);
     selectLesson(id,study?.voicings[id]?study.config.song:undefined);
+    picker.open = false;
+    picker.querySelector("summary").focus({ preventScroll: true });
   }));
 }
 
@@ -400,7 +437,7 @@ function selectLesson(id, song) {
       usage:{title:`本练习的${study.config.sectionLabel}`,cue:locations.length?`${study.voicings[id].label} 出现在第 ${locations.join('、')} 小节。先听旋律，再开启手动模式，只接手这个和弦。`:`这段没有 ${base.id}；可以先练上面的键盘，或换一首歌。`,sections:Array.from({length:study.barCount},(_,i)=>[`第 ${i+1} 小节`,locations.includes(i+1)])}};
   }
   activeLesson=chord;
-  renderSongLibrary();
+  document.querySelector("#chord-picker-label").textContent = `${chord.id.replace("Db", "D♭")} · ${chord.name}`;
   document.querySelectorAll(".chord-item").forEach(button => button.classList.toggle("active", button.dataset.chordId === chord.id));
   document.querySelector("#lesson-panel").innerHTML = `
     <div class="lesson-top">
@@ -408,12 +445,12 @@ function selectLesson(id, song) {
       <button class="lesson-play" aria-label="播放 ${chord.name}">▶</button>
     </div>
     ${renderLessonKeyboard(chord)}
-    <div class="song-context">
+    ${chord.song ? `<div class="song-context">
       <div><span class="tag">从这首歌开始</span><h3>《${chord.song}》</h3><p>${chord.artist}<br>${chord.context}</p></div>
       <div class="song-progression">${chord.progression.replace(chord.id.replace("Db", "Db"), `<b>${chord.id}</b>`)}</div>
       ${renderSongScore(chord)}
       ${renderSongUsage(chord)}
-    </div>
+    </div>` : `<p class="demo-explanation">先逐个听组成音，再一起弹响。可以和同根音的其他和弦对比，听听三音与七音如何改变色彩。</p>`}
     <details class="theory-details"><summary>想知道为什么？展开构成公式与乐理</summary>
     <p>这里的数字表示音之间的关系，不是手指编号。可以先照着上面的琴键弹，学过基础后再回来读。</p>
     <div class="theory-grid">
@@ -421,7 +458,7 @@ function selectLesson(id, song) {
       <div class="theory-block"><h3>02 / 符号怎么读</h3><p>${chord.theory}</p></div>
     </div>
     </details>
-    <div class="lesson-foot"><span>歌曲用于定位听感；不同现场或改编版本的调性可能不同。</span><button data-send-practice>自己找出这个和弦 →</button></div>
+    <div class="lesson-foot"><span>${chord.song ? "歌曲用于定位听感；不同现场或改编版本的调性可能不同。" : "先认识组成音，再点击右侧按钮练习找键。"}</span><button data-send-practice>自己找出这个和弦 →</button></div>
     ${renderFinalPracticePiece(chord)}`;
   document.querySelector(".lesson-play").addEventListener("click", () => playChord(chord));
   mountLessonKeyboard(chord);

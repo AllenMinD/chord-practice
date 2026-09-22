@@ -3,6 +3,21 @@
 // null is a rest. These are score transcriptions, never presented as MIDI extraction.
 module.exports=[
  {
+  voice:'前奏右手器乐声部',id:'fenlie',song:'分裂',artist:'周杰伦',defaultLesson:'Fmaj7',sectionLabel:'前奏开头',bpm:64,tempoLabel:'练习速度',transpose:0,
+  url:'https://www.zuoquba.com/gangqinqupu/973',sourceLabel:'作曲吧 ·《分裂》C 调简易版 · 第 1 页第 1–4 小节',
+  pages:[{file:'fenlie-score-1.jpg',url:'https://www.zuoquba.com/sites/default/files/inline-images/1_21.jpg',measures:[1,2,3,4]}],firstMeasure:1,
+  measures:[
+   [[null,2],['C4',2],['E4',2],['C4',2],[null,2],['C4',2],['E4',2],['C4',2]],
+   [[null,2],['C4',2],['E4',2],['C4',2],[null,2],['C4',2],['E4',2],['C4',2]],
+   [[null,2],['C4',2],['E4',2],['C4',2],[null,2],['C4',2],['E4',2],['C4',2]],
+   [[null,2],['C4',2],['E4',2],['C4',2],['C4',8,true]]
+  ],
+  description:'从前奏的两个白键 C、E 开始。右手先练八分音符与停顿，再加左手和弦；第 4 小节相同音之间的连线表示继续按住。',
+  tuning:'C 调简易谱 · 按源谱不再移调',
+  simplification:'节选公开 C 调简易钢琴谱第 1 页第 1–4 小节的前奏右手器乐声部，保留八分休止、重复起音和最后的延音；这不是人声主歌，也不是整首曲谱。按该简易谱音高转录，不再移调。源谱和声为 C–F/C–Fm/C–C–C–F/C–Fm/C；左手另配 C–Fmaj7–Fm–C–C–Fmaj7–Fm 教学和声，将持续低音改为和弦，F/C 加入 E 成为 Fmaj7 并改用根音位置；不声称与原录音和声相同。左手跨度不舒服时先只弹最低音。64 BPM 为慢速练习设置，源谱未标速度。',
+  harmony:[['C',0,8],['Fmaj7',8,8],['Fm',16,8],['C',24,8],['C',32,8],['Fmaj7',40,8],['Fm',48,16]]
+ },
+ {
   pitchNames:['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'],
   id:'qingtian',song:'晴天',artist:'周杰伦',defaultLesson:'Em7',sectionLabel:'主歌唱名短句',bpm:68,tempoLabel:'谱面速度',transpose:0,
   url:'https://www.everyonepiano.cn/Number-13074-1.html',sourceLabel:'人人钢琴网 · Jeanie《晴天》原调简单版 · 第 13–16 小节',

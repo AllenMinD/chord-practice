@@ -27,7 +27,7 @@ for(const study of catalog.studies.slice(1)){
       assert.equal(crypto.createHash('sha256').update(transcription).digest('hex'),source.transcriptionSha256);
       for(const page of source.pages){
         const image=fs.readFileSync(path.join(__dirname,'../assets/reference',page.file));
-        assert.equal(image.subarray(1,4).toString(),'PNG');
+        assert.ok(image.subarray(1,4).toString()==='PNG'||image.subarray(0,3).equals(Buffer.from([0xff,0xd8,0xff])));
         assert.equal(crypto.createHash('sha256').update(image).digest('hex'),page.sha256);
       }
       for(const note of study.data.melody){
@@ -136,4 +136,29 @@ test("Chinese excerpts retain checked melodic motifs, ties, rests and honest arr
   assert.equal(sun.playbackEvents('right').filter(n=>n.start===16).length,0);
   assert.equal(sun.related(76,'Fmaj7'),true);assert.equal(sun.related(76,'G'),false);
   assert.ok(sun.musicXml(new Set(['Fmaj7'])).includes('<tie type="stop"/>'));
+});
+
+test('MusicXML chord symbols follow their actual onset, including mid-bar changes',()=>{
+  for(const study of catalog.studies){
+    const measures=[...study.musicXml().matchAll(/<measure number="\d+">([\s\S]*?)<\/measure>/g)];
+    const onsets=[];
+    measures.forEach(([,xml],bar)=>{
+      let cursor=bar*16;
+      for(const [event] of xml.split('<backup>')[0].matchAll(/<harmony\b[\s\S]*?<\/harmony>|<note\b[\s\S]*?<\/note>/g)){
+        if(event.startsWith('<harmony'))onsets.push(cursor);
+        else cursor+=Number(event.match(/<duration>(\d+)<\/duration>/)[1]);
+      }
+    });
+    assert.deepEqual(onsets,study.harmony.map(h=>h.start),study.config.song);
+  }
+});
+
+test('Fenlie excerpt preserves the two-note instrumental motif and final tied note',()=>{
+  const study=catalog.forSong('分裂');
+  assert.equal(study.barCount,4);
+  assert.deepEqual([...new Set(study.data.melody.map(n=>n.midi))],[60,64]);
+  assert.equal(study.data.melody.at(-1).duration,10);
+  assert.equal(study.data.melody.at(-1).sourceSegments.length,2);
+  assert.equal(study.data.source.voice,'前奏右手器乐声部');
+  assert.equal(study.config.tempoLabel,'练习速度');
 });

@@ -16,7 +16,21 @@
     Cadd9: ["major", ["C", "D", "E", "F", "G", "A", "B"]]
   };
   function forChord(chord) {
-    const choice = choices[chord.id];
+    let choice = choices[chord.id];
+    const basic = /^([CDEFGAB])(m7|maj7|m)?$/.exec(chord.id);
+    if (!choice && basic) {
+      const letters = ["C", "D", "E", "F", "G", "A", "B"];
+      const pitches = [0, 2, 4, 5, 7, 9, 11];
+      const rootIndex = letters.indexOf(basic[1]);
+      const kind = basic[2] === "m" || basic[2] === "m7" ? "minor" : "major";
+      const names = patterns[kind].steps.map((step, index) => {
+        const letterIndex = (rootIndex + index) % 7;
+        let delta = (pitches[rootIndex] + step - pitches[letterIndex] + 12) % 12;
+        if (delta > 6) delta -= 12;
+        return letters[letterIndex] + (delta > 0 ? "♯".repeat(delta) : "♭".repeat(-delta));
+      });
+      choice = [kind, names];
+    }
     if (!choice) return null;
     const [kind, names] = choice, pattern = patterns[kind];
     const rootMidi = chord.midi[0];

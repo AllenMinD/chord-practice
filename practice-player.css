@@ -42,20 +42,6 @@
 @media(max-width:700px){.jt-participation {margin-left:20px;margin-right:20px;}.jt-manual-actions {grid-template-columns:1fr;}.jt-perform {min-height:98px;}.jt-midi {grid-column:auto;}}
 @media(max-width:700px){.jt-study {margin-left:-20px;margin-right:-20px;margin-bottom:-25px;}.jt-heading {padding:24px 20px;}.jt-learning {padding:20px;}.jt-controls {padding:20px;gap:10px;}.jt-controls > label {flex:1;min-width:120px;}.jt-controls label.jt-loop {flex-basis:100%;}.jt-live {margin-left:20px;margin-right:20px;}.jt-legend {margin-left:20px;margin-right:20px;}.jt-score-help {margin-left:20px;margin-right:20px;}.jt-note-guide,.jt-source {margin-left:20px;margin-right:20px;}.jt-phrase-list {grid-template-columns:1fr;}.jt-tips {grid-template-columns:1fr;margin-left:20px;margin-right:20px;gap:12px;}.jt-bottom {padding-left:20px;padding-right:20px;}.jt-score {min-width:710px;}}
 
-/* One shared song entry point, independent of the chord lesson identity. */
-.song-library-section { margin: 0 0 28px; }
-.song-library-section h2 { font-size: 19px; margin: 0 0 8px; }
-.song-library-section > p { font-size: 13px; color: #746f63; line-height: 1.8; margin: 0 0 14px; }
-.song-library { display: grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: 10px; }
-.song-choice { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding: 16px; text-align: left; border: 1px solid #dedbd2; border-radius: 12px; background: #fffdf7; color: #292820; cursor: pointer; font: inherit; }
-.song-choice strong { font-size: 16px; }
-.song-choice span,.song-choice small { font-size: 12px; color: #746f63; line-height: 1.5; }
-.song-choice:hover { border-color: #73927c; }
-.song-choice[aria-pressed="true"] { background: #edf4e9; border-color: #287143; box-shadow: inset 0 0 0 1px #287143; }
-.song-choice[aria-pressed="true"] strong { color: #287143; }
-.song-choice:focus-visible { outline: 3px solid #cc8a43; outline-offset: 3px; }
-@media(max-width:600px) { .song-library { grid-template-columns: repeat(2,minmax(0,1fr)); } .song-choice { padding: 12px; } }
-
 @media (min-width:701px) and (max-width:1400px) {
   .jt-controls select,.jt-known,.jt-midi button { min-height:44px; }
   .jt-controls .jt-loop,.jt-manual-toggle { min-height:44px; }

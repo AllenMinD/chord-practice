@@ -49,7 +49,10 @@
     }
     if(cursor<totalTicks)spans.push({start:cursor,duration:totalTicks-cursor,rest:true});
     return spans.flatMap(n=>{
-      const parts=splitSpan(n.start,n.duration);
+      // Split at harmonic changes so symbols sit at the actual beat and
+      // held melody notes can change color without adding another attack.
+      const boundaries=[n.start,...harmony.map(h=>h.start).filter(t=>t>n.start&&t<n.start+n.duration),n.start+n.duration];
+      const parts=boundaries.slice(0,-1).flatMap((start,i)=>splitSpan(start,boundaries[i+1]-start));
       return parts.map((p,i)=>({...n,...p,name:n.rest ? null : noteName(n.midi,chordAt(n.start).chord),tieStart:!n.rest && i<parts.length-1,tieStop:!n.rest && i>0}));
     });
   }
@@ -72,14 +75,14 @@
       const attrs=bar===0 ? '<attributes><divisions>4</divisions><key><fifths>0</fifths></key><time><beats>4</beats><beat-type>4</beat-type></time><staves>2</staves><clef number="1"><sign>G</sign><line>2</line></clef><clef number="2"><sign>F</sign><line>4</line></clef></attributes>' : "";
       const tempoMark=bar===0 ? `<direction placement="above"><direction-type><metronome><beat-unit>quarter</beat-unit><per-minute>${tempo}</per-minute></metronome></direction-type><sound tempo="${tempo}"/></direction>` : "";
       const harmonies=harmony.filter(h=>h.start>=begin&&h.start<begin+16);
-      const labels=harmonies.map(h=>{
+      const label=h=>{
         const v=voicings[h.chord];const color=learned.has(h.chord)?colors.learned:colors.ink;
         const suffix=v.kindText??({"major-seventh":"maj7","minor-seventh":"m7",dominant:"7","suspended-fourth":"sus4"}[v.kind]||"");
-        return `<harmony color="${color}"><root><root-step>${v.root}</root-step>${v.alter?`<root-alter>${v.alter}</root-alter>`:""}</root><kind text="${escape(suffix)}" use-symbols="no">${v.kind}</kind>${v.bass?`<bass><bass-step>${v.bass}</bass-step><bass-alter>${v.bassAlter}</bass-alter></bass>`:""}${v.degree?`<degree print-object="no"><degree-value>${v.degree.value}</degree-value><degree-alter>${v.degree.alter}</degree-alter><degree-type>${v.degree.type}</degree-type></degree>`:""}<offset>${h.start-begin}</offset><staff>1</staff></harmony>`;
-      }).join("");
-      const upper=melody.filter(n=>n.start>=begin&&n.start<begin+16).map(n=>noteXml(n,1,learned)).join("");
+        return `<harmony color="${color}"><root><root-step>${v.root}</root-step>${v.alter?`<root-alter>${v.alter}</root-alter>`:""}</root><kind text="${escape(suffix)}" use-symbols="no">${v.kind}</kind>${v.bass?`<bass><bass-step>${v.bass}</bass-step><bass-alter>${v.bassAlter}</bass-alter></bass>`:""}${v.degree?`<degree print-object="no"><degree-value>${v.degree.value}</degree-value><degree-alter>${v.degree.alter}</degree-alter><degree-type>${v.degree.type}</degree-type></degree>`:""}<staff>1</staff></harmony>`;
+      };
+      const upper=melody.filter(n=>n.start>=begin&&n.start<begin+16).map(n=>harmonies.filter(h=>h.start===n.start).map(label).join("")+noteXml(n,1,learned)).join("");
       const lower=harmony.flatMap(h=>splitSpan(h.start,h.duration).map(part=>({...h,...part}))).filter(part=>part.start>=begin&&part.start<begin+16).map(part=>part.notes.map((midi,i)=>noteXml({...part,midi,name:voicings[part.chord].names[i]},2,learned,i>0)).join("")).join("");
-      return `<measure number="${bar+1}">${bar>0&&bar%2===0?'<print new-system="yes"/>':""}${attrs}${tempoMark}${labels}${upper}<backup><duration>16</duration></backup>${lower}${bar===barCount-1?'<barline location="right"><bar-style>light-heavy</bar-style></barline>':""}</measure>`;
+      return `<measure number="${bar+1}">${bar>0&&bar%2===0?'<print new-system="yes"/>':""}${attrs}${tempoMark}${upper}<backup><duration>16</duration></backup>${lower}${bar===barCount-1?'<barline location="right"><bar-style>light-heavy</bar-style></barline>':""}</measure>`;
     }).join("");
     return `<?xml version="1.0" encoding="UTF-8"?><score-partwise version="3.1"><work><work-title>${escape(data.title)}</work-title></work><identification><creator type="arranger">CHORD · Local piano study</creator></identification><part-list><score-part id="P1"><part-name>Piano</part-name></score-part></part-list><part id="P1">${measures}</part></score-partwise>`;
   }

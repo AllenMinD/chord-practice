@@ -36,7 +36,7 @@
       { id: "recall-seven", mode: "recall", title: "再试一次 C7", text: "这次没有 maj。自己点选四颗琴键，再检查。", target: "C7", labels: "all", success: "C7 的第四个音是 B♭。两个代号的差别，现在能在键盘上找出来了。" },
       { id: "make-m7", mode: "transform", title: "m 和 7，可以组合", text: "从 C7 出发，保留 C、G、B♭，把 E 移到左边紧邻的 E♭。这就是 Cm7：小和弦再加 B♭。", target: "Cm7", from: "C7", labels: "all", hints: true, success: "Cm7 = C、E♭、G、B♭。m 改变三音，7 告诉你这里加入小七音。" },
       { id: "recall-m7", mode: "recall", title: "独立找到 Cm7", text: "把 m 和 7 的变化合起来，用四个音拼出这个和弦。", target: "Cm7", labels: "all", success: "四个音都找对了。你已经能组合两个后缀的含义。" },
-      { id: "play-sevenths", mode: "duet", title: "让代号变成连续的声音", text: "跟着提示，依次点 C、Cmaj7、C7、Cm7。留意每次新增或移动的那一个音。", target: "C", sequence: ["C","Cmaj7","C7","Cm7"], labels: "all", hints: true, success: "这段变化完成了。接下来可以进入歌曲与和弦库，认识这些代号在音乐里的用法。" }
+      { id: "play-sevenths", mode: "duet", title: "让代号变成连续的声音", text: "跟着提示，依次点 C、Cmaj7、C7、Cm7。留意每次新增或移动的那一个音。", target: "C", sequence: ["C","Cmaj7","C7","Cm7"], labels: "all", hints: true, success: "这段变化完成了。接下来可以进入现代和弦库，认识这些代号在音乐里的用法。" }
     ] }
   ];
   const storageKey = "chord-practice.beginner.v1";

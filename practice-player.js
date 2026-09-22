@@ -10,6 +10,7 @@
   let instrument=null,heldNotes=[],performedHarmony=null,inputMessage="";
   let floatingPanel=null,floatingFrame=0,floatingObserver=null;
   const settings={tempo:study.data.bpm,mode:"both",range:[0,study.totalTicks],loop:false,manualChord:false};
+  const visible=()=>Boolean(host?.closest("[data-view-panel]")?.classList.contains("active"));
   const manualEnabled=()=>settings.manualChord&&Boolean(study.voicings[focusChord]);
   const learned=()=>new Set([...manual,...(study.voicings[focusChord]?[focusChord]:[])]);
   const escape=value=>String(value).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
@@ -27,7 +28,7 @@
   const notesHtml=()=>Object.keys(study.voicings).map(id=>`<button type="button" class="jt-known ${learned().has(id)?"is-known":""} ${id===focusChord?"is-focus":""}" data-jt-known="${id}" aria-pressed="${learned().has(id)}" ${id===focusChord?'disabled title="本课和弦，始终高亮"':""}>${learned().has(id)?"✓ ":"＋ "}${html(id)}${id===focusChord?'<small>本课</small>':""}</button>`).join("");
   function render(chord){
     if(!selectStudy(chord))return "";
-    focusChord=chord.id;
+    focusChord=chord.id;settings.manualChord=false;
     return `<section class="jt-study" id="${PracticeCatalog.anchor(study)}" aria-labelledby="jt-title">
       <div class="jt-heading"><span class="eyebrow">建议练习 · ${escape(study.config.sectionLabel)}节选</span><h3 id="jt-title">${escape(study.config.song)}</h3><p>${escape(study.config.description)}</p><div class="jt-meta"><span>${study.barCount} 小节</span><span>4 / 4 拍</span><span>♩ = ${study.data.bpm}</span><span>约 ${Math.round(study.data.beats*60/study.data.bpm)} 秒</span><span>${escape(study.config.tuning)}</span></div></div>
       <div class="jt-learning"><div><strong>标出你学过的和弦</strong><small>已学的和弦与属于它的旋律音会变绿；点代号可增减标记。</small></div><div class="jt-known-list">${notesHtml()}</div><p class="jt-learning-note">${!study.voicings[chord.id] ? `这段${escape(study.config.sectionLabel)}中没有 ${escape(chord.id)}，所以不会把其他和弦误标成本课和弦。可以先在上面的键盘练习，再认识谱里实际出现的和弦。` : "本课和弦会自动选中，切换课程时同步更新。其余和弦学过后可自行标记。"}</p></div>
@@ -73,7 +74,7 @@
     });
   }
   async function renderScore(){
-    if(!document.querySelector("#learn-view").classList.contains("active"))return;
+    if(!visible())return;
     const current=++renderToken;
     sourceReady=false; entries=[]; noteElements=[];lastEntry=-1;
     osmd?.cursor?.hide();osmd=null;
@@ -155,7 +156,7 @@
     if(!floatingPanel||!host)return;
     const original=host.querySelector("[data-jt-perform]");
     const rect=original.getBoundingClientRect?.(),height=window.innerHeight,width=window.innerWidth;
-    const active=manualEnabled()&&!document.hidden&&document.querySelector("#learn-view").classList.contains("active");
+    const active=manualEnabled()&&!document.hidden&&visible();
     const outside=rect&&(rect.bottom<=16||rect.top>=height-16||rect.right<=0||rect.left>=width);
     const show=active&&outside;
     if(!show){
@@ -164,10 +165,10 @@
     }
     floatingPanel.hidden=false;
     const main=document.querySelector(".app-main").getBoundingClientRect();
-    const lesson=document.querySelector("#lesson-panel").getBoundingClientRect();
-    const list=document.querySelector("#chord-list");
-    const railLeft=Math.max(main.left+16,list.getBoundingClientRect().left);
-    const railBottom=list.lastElementChild?.getBoundingClientRect().bottom||0;
+    const lesson=host.getBoundingClientRect();
+    const list=host.closest("#learn-view")?document.querySelector("#chord-list"):null;
+    const railLeft=Math.max(main.left+16,(list?.getBoundingClientRect().left||main.left+16));
+    const railBottom=list?.lastElementChild?.getBoundingClientRect().bottom||0;
     const room=lesson.left-railLeft-24;
     floatingPanel.classList.remove("is-compact");
     floatingPanel.style.width=`${Math.min(210,Math.max(160,room))}px`;
@@ -338,14 +339,14 @@
     }
     if(playing)osmd.cursor.show();
   }
-  function mount(chord){
+  function mount(chord,container=document){
     dispose();if(!selectStudy(chord))return;
-    host=document.querySelector(".jt-study");if(!host)return;
+    host=container.querySelector(".jt-study");if(!host)return;
     focusChord=chord.id;position=0;settings.range=[0,study.totalTicks];settings.mode="both";settings.tempo=study.data.bpm;settings.loop=false;
     const mountedHost=host;
     mountFloating(chord);
     instrument=ChordInstrument.create({
-      canPlay:()=>host===mountedHost&&host.isConnected&&manualEnabled()&&soundEnabled&&!document.hidden&&document.querySelector("#learn-view").classList.contains("active"),
+      canPlay:()=>host===mountedHost&&host.isConnected&&manualEnabled()&&soundEnabled&&!document.hidden&&visible(),
       onNotes:notes=>{if(host!==mountedHost)return;heldNotes=notes;manualFeedback();updateManual();},
       onStatus:message=>{if(host===mountedHost)host.querySelector(".jt-midi-status").textContent=message;},
       onError:message=>{if(host===mountedHost){inputMessage=message;manualFeedback();}}
@@ -375,7 +376,7 @@
       const anchor=document.createElement("a");anchor.href=url;anchor.download=`${study.config.id}-local-study.musicxml`;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
     });
   }
-  document.addEventListener("chord:navigate",event=>{if(event.detail.view!=="learn"){pause();if(floatingPanel)floatingPanel.hidden=true;}else if(host&&!sourceReady)renderScore();queueFloating();});
+  document.addEventListener("chord:navigate",event=>{if(!visible()){pause();if(floatingPanel)floatingPanel.hidden=true;}else if(host&&!sourceReady)renderScore();queueFloating();});
   document.addEventListener("visibilitychange",()=>{if(document.hidden)pause();queueFloating();});
   document.querySelector("#sound-toggle").addEventListener("click",()=>{if(!soundEnabled)pause();updateManual();});
   window.PracticePlayer={render,mount,dispose};

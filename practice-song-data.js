@@ -1683,6 +1683,525 @@
     ]
   },
   {
+    "id": "fenlie",
+    "song": "分裂",
+    "artist": "周杰伦",
+    "defaultLesson": "Fmaj7",
+    "sectionLabel": "前奏开头",
+    "description": "从前奏的两个白键 C、E 开始。右手先练八分音符与停顿，再加左手和弦；第 4 小节相同音之间的连线表示继续按住。",
+    "tuning": "C 调简易谱 · 按源谱不再移调",
+    "tempoLabel": "练习速度",
+    "sourceLabel": "作曲吧 ·《分裂》C 调简易版 · 第 1 页第 1–4 小节",
+    "simplification": "节选公开 C 调简易钢琴谱第 1 页第 1–4 小节的前奏右手器乐声部，保留八分休止、重复起音和最后的延音；这不是人声主歌，也不是整首曲谱。按该简易谱音高转录，不再移调。源谱和声为 C–F/C–Fm/C–C–C–F/C–Fm/C；左手另配 C–Fmaj7–Fm–C–C–Fmaj7–Fm 教学和声，将持续低音改为和弦，F/C 加入 E 成为 Fmaj7 并改用根音位置；不声称与原录音和声相同。左手跨度不舒服时先只弹最低音。64 BPM 为慢速练习设置，源谱未标速度。",
+    "sourceNotice": "来源为公开提供的网友改编谱，仅作本机个人学习的短节选；保留原预览与署名，不是原曲录音。",
+    "data": {
+      "title": "分裂 · 前奏开头钢琴练习",
+      "bpm": 64,
+      "beats": 16,
+      "divisions": 4,
+      "source": {
+        "format": "score",
+        "url": "https://www.zuoquba.com/gangqinqupu/973",
+        "file": "fenlie-score-1.jpg",
+        "sha256": "da22002c541b69bb9aeb5f756cdab518dcd4119951ecbe38de68a11cc13c52d4",
+        "pages": [
+          {
+            "file": "fenlie-score-1.jpg",
+            "url": "https://www.zuoquba.com/sites/default/files/inline-images/1_21.jpg",
+            "measures": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "sha256": "da22002c541b69bb9aeb5f756cdab518dcd4119951ecbe38de68a11cc13c52d4"
+          }
+        ],
+        "firstMeasure": 1,
+        "lastMeasure": 4,
+        "voice": "前奏右手器乐声部",
+        "transpose": 0,
+        "octaveShift": 0,
+        "transcriptionFile": "scripts/score-excerpts.cjs",
+        "transcriptionSha256": "dd19445beba61d850f712180a7a750da78a5a41c1f11b1f05e657a298a12e2fd"
+      },
+      "melody": [
+        {
+          "id": "melody-0",
+          "start": 2,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 1,
+              "offset": 2,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-1",
+          "start": 4,
+          "duration": 2,
+          "midi": 64,
+          "sourceMidi": 64,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 1,
+              "offset": 4,
+              "duration": 2,
+              "written": "E4",
+              "midi": 64
+            }
+          ]
+        },
+        {
+          "id": "melody-2",
+          "start": 6,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 1,
+              "offset": 6,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-3",
+          "start": 10,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 1,
+              "offset": 10,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-4",
+          "start": 12,
+          "duration": 2,
+          "midi": 64,
+          "sourceMidi": 64,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 1,
+              "offset": 12,
+              "duration": 2,
+              "written": "E4",
+              "midi": 64
+            }
+          ]
+        },
+        {
+          "id": "melody-5",
+          "start": 14,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 1,
+              "offset": 14,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-6",
+          "start": 18,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 2,
+              "offset": 2,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-7",
+          "start": 20,
+          "duration": 2,
+          "midi": 64,
+          "sourceMidi": 64,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 2,
+              "offset": 4,
+              "duration": 2,
+              "written": "E4",
+              "midi": 64
+            }
+          ]
+        },
+        {
+          "id": "melody-8",
+          "start": 22,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 2,
+              "offset": 6,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-9",
+          "start": 26,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 2,
+              "offset": 10,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-10",
+          "start": 28,
+          "duration": 2,
+          "midi": 64,
+          "sourceMidi": 64,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 2,
+              "offset": 12,
+              "duration": 2,
+              "written": "E4",
+              "midi": 64
+            }
+          ]
+        },
+        {
+          "id": "melody-11",
+          "start": 30,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 2,
+              "offset": 14,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-12",
+          "start": 34,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 3,
+              "offset": 2,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-13",
+          "start": 36,
+          "duration": 2,
+          "midi": 64,
+          "sourceMidi": 64,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 3,
+              "offset": 4,
+              "duration": 2,
+              "written": "E4",
+              "midi": 64
+            }
+          ]
+        },
+        {
+          "id": "melody-14",
+          "start": 38,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 3,
+              "offset": 6,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-15",
+          "start": 42,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 3,
+              "offset": 10,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-16",
+          "start": 44,
+          "duration": 2,
+          "midi": 64,
+          "sourceMidi": 64,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 3,
+              "offset": 12,
+              "duration": 2,
+              "written": "E4",
+              "midi": 64
+            }
+          ]
+        },
+        {
+          "id": "melody-17",
+          "start": 46,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 3,
+              "offset": 14,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-18",
+          "start": 50,
+          "duration": 2,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 4,
+              "offset": 2,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        },
+        {
+          "id": "melody-19",
+          "start": 52,
+          "duration": 2,
+          "midi": 64,
+          "sourceMidi": 64,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 4,
+              "offset": 4,
+              "duration": 2,
+              "written": "E4",
+              "midi": 64
+            }
+          ]
+        },
+        {
+          "id": "melody-20",
+          "start": 54,
+          "duration": 10,
+          "midi": 60,
+          "sourceMidi": 60,
+          "transpose": 0,
+          "octaveShift": 0,
+          "sourceSegments": [
+            {
+              "measure": 4,
+              "offset": 6,
+              "duration": 2,
+              "written": "C4",
+              "midi": 60
+            },
+            {
+              "measure": 4,
+              "offset": 8,
+              "duration": 8,
+              "written": "C4",
+              "midi": 60
+            }
+          ]
+        }
+      ]
+    },
+    "voicings": {
+      "C": {
+        "label": "C",
+        "notes": [
+          48,
+          52,
+          55
+        ],
+        "names": [
+          "C",
+          "E",
+          "G"
+        ],
+        "kind": "major",
+        "root": "C"
+      },
+      "Fmaj7": {
+        "label": "Fmaj7",
+        "notes": [
+          53,
+          57,
+          60,
+          64
+        ],
+        "names": [
+          "F",
+          "A",
+          "C",
+          "E"
+        ],
+        "kind": "major-seventh",
+        "root": "F"
+      },
+      "Fm": {
+        "label": "Fm",
+        "notes": [
+          53,
+          56,
+          60
+        ],
+        "names": [
+          "F",
+          "A♭",
+          "C"
+        ],
+        "kind": "minor",
+        "kindText": "m",
+        "root": "F"
+      }
+    },
+    "harmony": [
+      {
+        "chord": "C",
+        "start": 0,
+        "duration": 8
+      },
+      {
+        "chord": "Fmaj7",
+        "start": 8,
+        "duration": 8
+      },
+      {
+        "chord": "Fm",
+        "start": 16,
+        "duration": 8
+      },
+      {
+        "chord": "C",
+        "start": 24,
+        "duration": 8
+      },
+      {
+        "chord": "C",
+        "start": 32,
+        "duration": 8
+      },
+      {
+        "chord": "Fmaj7",
+        "start": 40,
+        "duration": 8
+      },
+      {
+        "chord": "Fm",
+        "start": 48,
+        "duration": 16
+      }
+    ]
+  },
+  {
     "pitchNames": [
       "C",
       "C♯",
@@ -1744,7 +2263,7 @@
         "transpose": 0,
         "octaveShift": 0,
         "transcriptionFile": "scripts/score-excerpts.cjs",
-        "transcriptionSha256": "2bdccf3cc9c72804a4b67a836b109531c938b506fbbe64eb9ed6697cfb7707a9"
+        "transcriptionSha256": "dd19445beba61d850f712180a7a750da78a5a41c1f11b1f05e657a298a12e2fd"
       },
       "melody": [
         {
@@ -2504,7 +3023,7 @@
         "transpose": 4,
         "octaveShift": 0,
         "transcriptionFile": "scripts/score-excerpts.cjs",
-        "transcriptionSha256": "2bdccf3cc9c72804a4b67a836b109531c938b506fbbe64eb9ed6697cfb7707a9"
+        "transcriptionSha256": "dd19445beba61d850f712180a7a750da78a5a41c1f11b1f05e657a298a12e2fd"
       },
       "melody": [
         {
@@ -2977,7 +3496,7 @@
         "transpose": 0,
         "octaveShift": 0,
         "transcriptionFile": "scripts/score-excerpts.cjs",
-        "transcriptionSha256": "2bdccf3cc9c72804a4b67a836b109531c938b506fbbe64eb9ed6697cfb7707a9"
+        "transcriptionSha256": "dd19445beba61d850f712180a7a750da78a5a41c1f11b1f05e657a298a12e2fd"
       },
       "melody": [
         {

@@ -25,11 +25,7 @@
     updateStats();
   }
   function updateStats() {
-    const count = course.lessons.filter(done).length;
-    document.querySelector("#sidebar-progress").innerHTML = `${count}<small>/ 3 课</small>`;
-    document.querySelector("#learner-status").textContent = count ? `已完成 ${count} 节起步课程` : "从第一颗琴键开始";
     document.querySelector("#learning-status").textContent = progress.practiceDays.includes(today()) ? "今天又向前了一点" : "一次学会一点";
-    document.querySelector(".local-progress-note").textContent = storageAvailable ? "学习进度保存在这台设备" : "暂时无法保存；本次仍可继续学习";
   }
   function keyboard(step, selected = [], preview = false) {
     const white = [60,62,64,65,67,69,71,72];
@@ -73,7 +69,7 @@
         <div class="route-bottom"><span>${lesson.duration}</span><span>${done(lesson) ? lesson.steps.length : progress.checkpoints[lesson.id] || 0} / ${lesson.steps.length} 步 <b>↗</b></span></div>
         <span class="route-progress"><i style="width:${(progress.checkpoints[lesson.id] || 0)/lesson.steps.length*100}%"></i></span>
       </button>`).join("")}</div></section>
-      <div class="learning-footer"><p><strong>认识 → 独立找回 → 到琴上弹</strong><br>屏幕练习记录的是找音和跟弹体验。真正的双手配合，留给你在琴上慢慢练。</p><button class="text-button" data-library>已经有基础？探索歌曲与和弦库 ↗</button></div>`;
+      <div class="learning-footer"><p><strong>认识 → 独立找回 → 到琴上弹</strong><br>屏幕练习记录的是找音和跟弹体验。真正的双手配合，留给你在琴上慢慢练。</p><button class="text-button" data-library>已经有基础？探索现代和弦库 ↗</button></div>`;
     home.querySelectorAll("[data-start-lesson]").forEach(button => button.addEventListener("click", () => startLesson(button.dataset.startLesson)));
     home.querySelectorAll("[data-preview-chord]").forEach(button => button.addEventListener("click", async () => {
       const chord = course.getChord(button.dataset.previewChord);
